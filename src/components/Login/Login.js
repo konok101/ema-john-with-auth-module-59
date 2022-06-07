@@ -43,7 +43,7 @@ const Login = () => {
                         <input onBlur={handlePasswordBlur} type="password" name="password" id="" required />
                     </div>
                     <p style={{ color: 'red' }}>{error?.message}</p>
-                    <input     className='form-submit' type="submit" value="Loginn" />
+                    <input  className='form-submit' type="submit" value="Loginn" />
                 </form>
                 <p>New to Ema-jhon <Link className='form-link' to='/signup'> Create an account</Link></p>
             </div>
