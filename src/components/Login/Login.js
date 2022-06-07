@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import './Login.css'
 import auth from '../../firebase.init';
@@ -11,7 +11,9 @@ const Login = () => {
         signInWithEmailAndPassword,
         user,
         error
-      ] = useSignInWithEmailAndPassword(auth);
+    ] = useSignInWithEmailAndPassword(auth);
+    const location = useLocation();
+    const form = location?.state?.pa || '/';
 
     const handleEmailBlur = event => {
         setEmail(event.target.value);
@@ -20,12 +22,12 @@ const Login = () => {
         setPassword(event.target.value);
     }
     if (user) {
-        navigate('/about');
+        navigate(form , {replace: true});
     }
     const handleUserSignIn = event => {
         event.preventDefault();
         signInWithEmailAndPassword(email, password);
-         console.log(email, password)
+        console.log(email, password)
 
     }
     return (
@@ -36,14 +38,14 @@ const Login = () => {
                 <form onSubmit={handleUserSignIn}>
                     <div className="input-group">
                         <label htmlFor="email">Email</label>
-                        <input  onBlur={handleEmailBlur} type="email" name="email" id="" required />
+                        <input onBlur={handleEmailBlur} type="email" name="email" id="" required />
                     </div>
                     <div className="input-group">
                         <label htmlFor="password">Password</label>
                         <input onBlur={handlePasswordBlur} type="password" name="password" id="" required />
                     </div>
                     <p style={{ color: 'red' }}>{error?.message}</p>
-                    <input  className='form-submit' type="submit" value="Loginn" />
+                    <input className='form-submit' type="submit" value="Loginn" />
                 </form>
                 <p>New to Ema-jhon <Link className='form-link' to='/signup'> Create an account</Link></p>
             </div>
